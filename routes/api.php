@@ -22,3 +22,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('products', 'ProductController@index');
+
+Route::post('register', 'UserController@register');
+Route::post('login', 'UserController@login');
+
+Route::group(['middleware' => ['jwt.verify']], function () {
+    Route::post('logout', 'UserController@logout');
+});
