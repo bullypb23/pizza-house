@@ -9,6 +9,8 @@ use App\OrderItem;
 use App\Product;
 use App\Size;
 use App\User;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderMail;
 
 class OrderController extends Controller
 {
@@ -50,6 +52,8 @@ class OrderController extends Controller
             $orderItem->size_id = $size->id;
             $orderItem->save();
         }
+
+        Mail::to($request->email)->send(new OrderMail($order));
 
         return response()->json(['message' => 'You have successfully completed order!']);
     }
