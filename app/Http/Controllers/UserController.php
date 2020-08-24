@@ -8,13 +8,14 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 
 
 class UserController extends Controller
 {
     public function login(Request $request)
     {
-        $credentials = $request->only('username', 'password');
+        $credentials = $request->only('email', 'password');
 
         try {
             if (!$token = JWTAuth::attempt($credentials)) {
@@ -44,7 +45,7 @@ class UserController extends Controller
             'password' => [
                 'required',
                 'min:8',
-                'regex:/^(?=.*[A-Za-z])(?=.*\d)(?=.*[.,:;^@$!%*#?&])[A-Za-z\d@.,:;^@$!%*#?&]{8,}$/',
+                'regex:/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/',
                 'confirmed'
             ],
         ]);
@@ -60,7 +61,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return response()->json(['message' => 'Created account successfully!'], 201);
+        return $this->login($request);
     }
 
     /**
