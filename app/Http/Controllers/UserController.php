@@ -60,8 +60,6 @@ class UserController extends Controller
 
         $user->save();
 
-        $this->login($request);
-
-        return response()->json(compact('user'));
+        return $this->login($request);
     }
 }
