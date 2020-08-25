@@ -10,7 +10,7 @@ class MessageController extends Controller
 {
     public function store(Request $request)
     {
-        Mail::to(env('MAIL_FROM_ADDRESS'))->send(new MessageMail($request));
+        // Mail::to(env('MAIL_FROM_ADDRESS'))->send(new MessageMail($request));
 
         return response()->json(['message' => 'You successfully sent message to Pizza House!']);
     }

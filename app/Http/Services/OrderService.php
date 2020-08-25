@@ -45,6 +45,6 @@ class OrderService
 			$orderItem->save();
 		}
 
-		Mail::to($request->email)->send(new OrderMail($order));
+		// Mail::to($request->email)->send(new OrderMail($order));
 	}
 }
