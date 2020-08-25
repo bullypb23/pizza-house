@@ -29,7 +29,7 @@ class StoreOrder extends FormRequest
             'phone' => 'required|regex:/^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{3,8}$/',
             'email' => 'required|email',
             'total_price' => 'required',
-            'order_items' => 'required',
+            'order_items' => 'required|array|min:1',
         ];
     }
 }

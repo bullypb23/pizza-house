@@ -8,7 +8,6 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\User;
-use Illuminate\Support\Facades\Auth;
 
 
 class UserController extends Controller
@@ -19,10 +18,10 @@ class UserController extends Controller
 
         try {
             if (!$token = JWTAuth::attempt($credentials)) {
-                return response()->json(['message' => 'invalid_credentials'], 404);
+                return response()->json(['message' => 'Invalid Credentials'], 404);
             }
         } catch (JWTException $e) {
-            return response()->json(['message' => 'could_not_create_token'], 500);
+            return response()->json(['message' => 'Could not create token'], 500);
         }
 
         $user = auth()->user();
@@ -51,7 +50,7 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['message' => $validator->errors()->first()]);
+            return response()->json(['message' => $validator->errors()->first()], 400);
         }
 
         $user = new User();
@@ -61,22 +60,8 @@ class UserController extends Controller
 
         $user->save();
 
-        return $this->login($request);
-    }
+        $this->login($request);
 
-    /**
-     * Get the token array structure.
-     *
-     * @param  string $token
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    // protected function respondWithToken($token)
-    // {
-    //     return response()->json([
-    //         'access_token' => $token,
-    //         'token_type' => 'bearer',
-    //         'expires_in' => auth()->factory()->getTTL() * 60
-    //     ]);
-    // }
+        return response()->json(compact('user'));
+    }
 }

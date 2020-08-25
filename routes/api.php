@@ -17,10 +17,6 @@ use App\Http\Resources\ProductCollection;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::get('products', 'ProductController@index');
 Route::post('orders', 'OrderController@store');
 Route::post('messages', 'MessageController@store');
