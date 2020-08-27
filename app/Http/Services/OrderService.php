@@ -44,7 +44,8 @@ class OrderService
 			$orderItem->size_id = $size->id;
 			$orderItem->save();
 		}
-
+		// cant add mailtrap addon on heroku because it is not free
+		// but on local machine it is working 
 		// Mail::to($request->email)->send(new OrderMail($order));
 	}
 }

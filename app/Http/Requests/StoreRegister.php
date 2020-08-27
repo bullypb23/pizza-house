@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class StoreOrder extends FormRequest
+class StoreRegister extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,12 +26,9 @@ class StoreOrder extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:255',
-            'address' => 'required',
-            'phone' => 'required|regex:/^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{3,8}$/',
-            'email' => 'required|email',
-            'total_price' => 'required',
-            'order_items' => 'required|array|min:1',
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|min:8|regex:/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/|confirmed'
         ];
     }
 
